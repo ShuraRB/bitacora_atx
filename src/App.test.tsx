@@ -57,4 +57,30 @@ describe('App', () => {
       ),
     ).toBeInTheDocument()
   })
+
+  it('alterna entre Kanban y Gantt sin perder las tareas', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await agregar('Informe', 'Ventas', user)
+
+    expect(screen.getByRole('button', { name: 'Kanban' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    await user.click(screen.getByRole('button', { name: 'Gantt' }))
+    expect(
+      screen.getByRole('region', { name: 'Vista Gantt' }),
+    ).toBeInTheDocument()
+    expect(screen.queryByRole('region', { name: 'Por hacer' })).toBeNull()
+    expect(
+      screen.getByRole('img', { name: /Informe \(Ventas\)/ }),
+    ).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Kanban' }))
+    expect(
+      within(screen.getByRole('region', { name: 'Por hacer' })).getByText(
+        'Informe',
+      ),
+    ).toBeInTheDocument()
+  })
 })

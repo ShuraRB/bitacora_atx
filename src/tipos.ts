@@ -20,3 +20,7 @@ export interface Tarea {
   /** Múltiplos de 0.5, desde 0 */
   horas: number
 }
+
+export type Vista = 'kanban' | 'gantt'
+
+export type Periodo = 'semana' | 'mes'

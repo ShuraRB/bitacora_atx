@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { crearTarea, validarTarea, type DatosTarea } from './tareas'
+import type { Tarea } from '../tipos'
+import {
+  crearTarea,
+  tareasDelPeriodo,
+  validarTarea,
+  type DatosTarea,
+} from './tareas'
 
 const base: DatosTarea = {
   titulo: 'Revisar reporte',
@@ -42,5 +48,42 @@ describe('crearTarea', () => {
     expect(a.titulo).toBe('Hola')
     expect(a.horas).toBe(1.5)
     expect(a.id).not.toBe(b.id)
+  })
+})
+
+describe('tareasDelPeriodo', () => {
+  const t = (
+    id: string,
+    titulo: string,
+    inicio: string,
+    fin: string,
+  ): Tarea => ({
+    id,
+    titulo,
+    proyecto: 'P',
+    estado: 'por-hacer',
+    inicio,
+    fin,
+    horas: 1,
+  })
+  const semana = { inicio: '2026-11-02', fin: '2026-11-08' }
+
+  it('incluye solo las que se solapan y las ordena por inicio y título', () => {
+    const tareas = [
+      t('1', 'Zeta', '2026-11-04', '2026-11-04'),
+      t('2', 'Fuera', '2026-11-10', '2026-11-11'),
+      t('3', 'Alfa', '2026-11-04', '2026-11-05'),
+      t('4', 'Antes', '2026-10-30', '2026-11-02'),
+    ]
+    expect(tareasDelPeriodo(tareas, semana).map((x) => x.titulo)).toEqual([
+      'Antes',
+      'Alfa',
+      'Zeta',
+    ])
+  })
+
+  it('ignora tareas con fin anterior a inicio', () => {
+    const rota = t('5', 'Rota', '2026-11-06', '2026-11-03')
+    expect(tareasDelPeriodo([rota], semana)).toEqual([])
   })
 })

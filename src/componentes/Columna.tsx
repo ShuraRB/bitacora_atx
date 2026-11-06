@@ -17,17 +17,17 @@ export function Columna({ estado, tareas, alMover }: Props) {
       ref={setNodeRef}
       aria-label={titulo}
       className={`flex min-h-40 flex-col gap-3 rounded-lg p-3 transition-colors ${
-        isOver ? 'bg-indigo-100' : 'bg-slate-200/60'
+        isOver ? 'bg-blue-100' : 'bg-blue-100/70'
       }`}
     >
-      <h2 className="flex items-center justify-between text-sm font-bold uppercase tracking-wide text-slate-600">
+      <h2 className="flex items-center justify-between text-sm font-bold uppercase tracking-wide text-blue-800">
         {titulo}
         <span className="rounded-full bg-white px-2 py-0.5 text-xs font-semibold">
           {tareas.length}
         </span>
       </h2>
       {tareas.length === 0 ? (
-        <p className="text-xs text-slate-500">Sin tareas.</p>
+        <p className="text-xs text-sky-500">Sin tareas.</p>
       ) : (
         tareas.map((t) => (
           <TarjetaTarea key={t.id} tarea={t} alMover={alMover} />

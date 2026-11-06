@@ -24,10 +24,14 @@ src/
 │   ├── FormularioTarea.tsx
 │   ├── Tablero.tsx       DndContext y sensores
 │   ├── Columna.tsx       Zona de soltado (droppable)
-│   └── TarjetaTarea.tsx  Tarjeta arrastrable y botones de mover
+│   ├── TarjetaTarea.tsx  Tarjeta arrastrable y botones de mover
+│   ├── SelectorVista.tsx Alterna Kanban / Gantt
+│   ├── VistaGantt.tsx    Cuadrícula de días y filas de tareas
+│   ├── ControlesPeriodo.tsx  Semana / Mes y Anterior, Hoy, Siguiente
+│   └── BarraTarea.tsx    Barra de una tarea, con color por estado
 └── utils/
-    ├── fechas.ts         Toda la lógica de fechas (funciones puras)
-    └── tareas.ts         Validación y creación de tareas
+    ├── fechas.ts         Toda la lógica de fechas (funciones puras), incluidos los periodos del Gantt
+    └── tareas.ts         Validación, creación y filtrado por periodo
 ```
 
 Cada módulo con lógica tiene su archivo `.test.ts(x)` al lado.
@@ -41,3 +45,11 @@ Cada módulo con lógica tiene su archivo `.test.ts(x)` al lado.
 - Los componentes **no calculan fechas**: usan `utils/fechas.ts`.
 - Los componentes **no tocan `localStorage`**: usan `almacenamiento.ts`. Cambiar el almacenamiento (por ejemplo a una API) solo afecta ese archivo.
 - Todos los textos de la interfaz están en español.
+
+## Vista Gantt
+
+- Solo lectura: cada tarea es una barra entre `inicio` y `fin`; el selector Semana / Mes y los botones Anterior, Hoy y Siguiente cambian el periodo.
+- La semana va de lunes a domingo.
+- `VistaGantt` calcula el periodo con `rangoPeriodo` y `diasDelPeriodo`, filtra con `tareasDelPeriodo` y ubica cada barra con `posicionBarra` (columnas dentro de una cuadrícula CSS, una por día).
+- Las tareas que empiezan antes o terminan después del periodo se recortan y el extremo se dibuja en flecha.
+- Los días se cuentan con `differenceInCalendarDays`, para que el cambio de horario no desplace las barras.

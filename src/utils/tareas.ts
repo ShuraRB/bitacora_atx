@@ -1,5 +1,5 @@
 import { ESTADOS, type Estado, type Tarea } from '../tipos'
-import { validarRango } from './fechas'
+import { seSolapa, validarRango, type RangoFechas } from './fechas'
 
 export interface DatosTarea {
   titulo: string
@@ -52,4 +52,20 @@ export function crearTarea(datos: DatosTarea): Tarea {
 
 export function esEstado(valor: unknown): valor is Estado {
   return ESTADOS.includes(valor as Estado)
+}
+
+/** Tareas que se solapan con el periodo, ordenadas por inicio y luego por título. */
+export function tareasDelPeriodo(
+  tareas: Tarea[],
+  periodo: RangoFechas,
+): Tarea[] {
+  return tareas
+    .filter(
+      (t) => validarRango(t.inicio, t.fin) === null && seSolapa(t, periodo),
+    )
+    .sort(
+      (a, b) =>
+        a.inicio.localeCompare(b.inicio) ||
+        a.titulo.localeCompare(b.titulo, 'es'),
+    )
 }

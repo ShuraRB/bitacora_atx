@@ -9,14 +9,14 @@
 3. Mover tareas entre columnas arrastrando o con botones.
 4. Persistencia en `localStorage`: los datos sobreviven a recargar la página.
 
-Fuera de alcance en v1: editar o eliminar tareas, vista Gantt, exportación a Excel, cuentas de usuario y backend.
+Fuera de alcance en v1: editar o eliminar tareas, exportación a Excel, cuentas de usuario y backend.
 
 ## Hoja de ruta
 
-| Versión | Funcionalidad                           |
-| ------- | --------------------------------------- |
-| 1       | Formulario, kanban y persistencia local |
-| Próxima | Vista Gantt por semana y por mes        |
-| Próxima | Exportar tareas a Excel                 |
+| Versión | Funcionalidad                            |
+| ------- | ---------------------------------------- |
+| 1       | Formulario, kanban y persistencia local  |
+| 1.1     | Vista Gantt por semana y por mes (hecha) |
+| Próxima | Exportar tareas a Excel                  |
 
 La base (tipos, lógica de fechas y almacenamiento aislados) está pensada para agregar estas funciones sin reescribir lo existente.

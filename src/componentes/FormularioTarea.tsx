@@ -18,7 +18,7 @@ function datosIniciales(): DatosTarea {
 }
 
 const clase =
-  'w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200'
+  'w-full rounded-md border border-blue-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'
 
 interface CampoProps {
   id: keyof DatosTarea
@@ -102,7 +102,7 @@ export function FormularioTarea({ alAgregar }: Props) {
       <div className="sm:col-span-2 lg:col-span-6">
         <button
           type="submit"
-          className="w-full rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300 sm:w-auto"
+          className="w-full rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 sm:w-auto"
         >
           Agregar tarea
         </button>
