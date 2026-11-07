@@ -53,3 +53,11 @@ Cada módulo con lógica tiene su archivo `.test.ts(x)` al lado.
 - `VistaGantt` calcula el periodo con `rangoPeriodo` y `diasDelPeriodo`, filtra con `tareasDelPeriodo` y ubica cada barra con `posicionBarra` (columnas dentro de una cuadrícula CSS, una por día).
 - Las tareas que empiezan antes o terminan después del periodo se recortan y el extremo se dibuja en flecha.
 - Los días se cuentan con `differenceInCalendarDays`, para que el cambio de horario no desplace las barras.
+
+## Diseño visual y temas
+
+- Dirección "plano técnico": tinta azul marino y cobalto sobre papel con rejilla; los títulos usan una serif del sistema y el resto una sans del sistema.
+- `src/index.css` define los tokens (superficies, bordes, tinta, acento, colores por estado) para el tema claro y el oscuro. Los componentes solo usan esos nombres.
+- El tema se guarda en `bitacora-tema` (`almacenamiento.ts`) y se aplica como `data-tema` en `<html>`. Sin preferencia guardada se usa la del sistema.
+- Responsive: en pantalla ancha el formulario va en una barra lateral fija; en tablet y móvil va arriba y las columnas del Kanban se apilan en móvil.
+- Las animaciones se desactivan con `prefers-reduced-motion`.

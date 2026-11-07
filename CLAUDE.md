@@ -18,11 +18,13 @@
 
 - El linter es oxlint (el de la plantilla de Vite), no ESLint.
 - Tailwind CSS 4 con el plugin `@tailwindcss/vite`; no hay `tailwind.config`.
+- Los colores, sombras y fuentes son tokens semánticos definidos en `src/index.css` (`bg-superficie`, `text-tinta`, `bg-acento`, `bg-hacer`...); el tema claro y el oscuro solo cambian sus valores.
 - Drag and drop con `@dnd-kit/core`; no está instalado `@dnd-kit/sortable`.
 - Las pruebas usan jsdom y `src/setupTests.ts` limpia el DOM y `localStorage` tras cada prueba.
 - Estructura de `src/`:
-  - `componentes/`: un componente por archivo (`VistaGantt`, `BarraTarea`, `ControlesPeriodo`, `SelectorVista`, `Tablero`, `Columna`, `TarjetaTarea`, `FormularioTarea`).
-  - `tipos.ts`: tipos del proyecto (`Tarea`, `Estado`, `Vista`, `Periodo`).
+  - `componentes/`: un componente por archivo (`Cabecera`, `InterruptorTema`, `SelectorVista`, `ControlSegmentado`, `Icono`, `FormularioTarea`, `Campo`, `Tablero`, `Columna`, `TarjetaTarea`, `VistaGantt`, `ControlesPeriodo`, `FilaGantt`, `BarraTarea`).
+  - `estilos.ts`: clases de Tailwind por estado de tarea.
+  - `tipos.ts`: tipos del proyecto (`Tarea`, `Estado`, `Vista`, `Periodo`, `Tema`).
   - `utils/fechas.ts`: toda la lógica de fechas, como funciones puras; incluye los periodos del Gantt (`rangoPeriodo`, `diasDelPeriodo`, `desplazarPeriodo`, `seSolapa`, `posicionBarra`).
   - `utils/tareas.ts`: validación, creación y filtrado por periodo (`tareasDelPeriodo`) de tareas.
   - `almacenamiento.ts`: único lugar que lee y escribe `localStorage`.
@@ -32,6 +34,7 @@
 - Todos los textos de la interfaz y los mensajes de error van en español.
 - Escribe código simple, sin abstracciones que no hagan falta.
 - Usa nombres descriptivos en español para el dominio (`tarea`, `proyecto`, `inicio`, `fin`).
+- No pongas colores fijos (`blue-500`, `#fff`) en los componentes: usa los tokens de `src/index.css` para que funcionen en ambos temas.
 - Cada módulo con lógica tiene su archivo de pruebas junto a él.
 
 ## Trampas conocidas
@@ -53,6 +56,7 @@
 - `inicio` y `fin`: texto `"AAAA-MM-DD"`; `fin` no puede ser anterior a `inicio`.
 - `horas`: número en múltiplos de 0.5, desde 0.
 - Al cargar, los registros con forma inválida se descartan.
+- Tema: clave `bitacora-tema` con `"claro"` o `"oscuro"`; sin valor guardado se usa la preferencia del sistema.
 
 ## Forma de trabajar
 

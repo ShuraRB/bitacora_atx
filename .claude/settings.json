@@ -9,14 +9,20 @@
       "Bash(npm run format)",
       "Bash(git status *)",
       "Bash(git diff *)",
-      "Bash(git log *)"
+      "Bash(git log *)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_console_messages"
     ],
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
       "Edit(./package-lock.json)",
       "Bash(git push *)",
-      "Bash(rm -rf *)"
+      "Bash(rm -rf *)",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_run_code_unsafe"
     ]
   },
   "hooks": {

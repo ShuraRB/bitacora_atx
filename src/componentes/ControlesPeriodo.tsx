@@ -1,4 +1,6 @@
 import type { Periodo } from '../tipos'
+import { ControlSegmentado, type OpcionSegmentada } from './ControlSegmentado'
+import { Icono } from './Icono'
 
 interface Props {
   periodo: Periodo
@@ -9,13 +11,13 @@ interface Props {
   alHoy: () => void
 }
 
-const OPCIONES: { valor: Periodo; etiqueta: string }[] = [
+const OPCIONES: OpcionSegmentada<Periodo>[] = [
   { valor: 'semana', etiqueta: 'Semana' },
   { valor: 'mes', etiqueta: 'Mes' },
 ]
 
 const botonNavegar =
-  'rounded-md border border-blue-200 bg-white px-3 py-1.5 text-sm hover:bg-blue-50'
+  'inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-sm font-medium text-suave transition-colors hover:bg-superficie hover:text-tinta'
 
 export function ControlesPeriodo({
   periodo,
@@ -26,30 +28,22 @@ export function ControlesPeriodo({
   alHoy,
 }: Props) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      <div
-        role="group"
-        aria-label="Periodo"
-        className="inline-flex overflow-hidden rounded-md border border-blue-200 bg-white text-sm"
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+      <p
+        aria-live="polite"
+        className="min-w-44 font-display text-xl font-semibold tracking-tight tabular-nums first-letter:uppercase"
       >
-        {OPCIONES.map(({ valor, etiqueta: texto }) => (
-          <button
-            key={valor}
-            type="button"
-            aria-pressed={periodo === valor}
-            onClick={() => alCambiarPeriodo(valor)}
-            className={`px-4 py-1.5 font-medium ${
-              periodo === valor
-                ? 'bg-blue-700 text-white'
-                : 'text-blue-900 hover:bg-blue-50'
-            }`}
-          >
-            {texto}
-          </button>
-        ))}
-      </div>
-      <div className="flex items-center gap-2">
+        {etiqueta}
+      </p>
+      <ControlSegmentado
+        etiqueta="Periodo"
+        opciones={OPCIONES}
+        valor={periodo}
+        alCambiar={alCambiarPeriodo}
+      />
+      <div className="inline-flex rounded-xl border border-borde bg-superficie-2 p-1">
         <button type="button" onClick={alAnterior} className={botonNavegar}>
+          <Icono nombre="chevronIzquierda" />
           Anterior
         </button>
         <button type="button" onClick={alHoy} className={botonNavegar}>
@@ -57,11 +51,9 @@ export function ControlesPeriodo({
         </button>
         <button type="button" onClick={alSiguiente} className={botonNavegar}>
           Siguiente
+          <Icono nombre="chevronDerecha" />
         </button>
       </div>
-      <p aria-live="polite" className="text-sm font-semibold capitalize">
-        {etiqueta}
-      </p>
     </div>
   )
 }

@@ -7,6 +7,8 @@ import {
   type DatosTarea,
   type ErroresTarea,
 } from '../utils/tareas'
+import { Campo } from './Campo'
+import { Icono } from './Icono'
 
 interface Props {
   alAgregar: (tarea: Tarea) => void
@@ -17,35 +19,8 @@ function datosIniciales(): DatosTarea {
   return { titulo: '', proyecto: '', inicio: fecha, fin: fecha, horas: '1' }
 }
 
-const clase =
-  'w-full rounded-md border border-blue-200 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200'
-
-interface CampoProps {
-  id: keyof DatosTarea
-  etiqueta: string
-  error?: string
-  children: React.ReactNode
-}
-
-function Campo({ id, etiqueta, error, children }: CampoProps) {
-  return (
-    <div>
-      <label htmlFor={id} className="mb-1 block text-sm font-medium">
-        {etiqueta}
-      </label>
-      {children}
-      {error && (
-        <p
-          id={`${id}-error`}
-          role="alert"
-          className="mt-1 text-xs text-red-600"
-        >
-          {error}
-        </p>
-      )}
-    </div>
-  )
-}
+const claseCampo =
+  'h-11 w-full rounded-lg border border-borde bg-superficie-2 px-3 text-sm text-tinta transition-[border-color,box-shadow,background-color] duration-150 hover:border-borde-fuerte focus:border-acento focus:bg-superficie focus:outline-none focus:ring-4 focus:ring-acento/20 aria-[invalid=true]:border-peligro aria-[invalid=true]:focus:ring-peligro/20'
 
 export function FormularioTarea({ alAgregar }: Props) {
   const [datos, setDatos] = useState<DatosTarea>(datosIniciales)
@@ -59,7 +34,7 @@ export function FormularioTarea({ alAgregar }: Props) {
     value: datos[campo],
     onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
       cambiar(campo, e.target.value),
-    className: clase,
+    className: claseCampo,
     'aria-invalid': errores[campo] ? true : undefined,
     'aria-describedby': errores[campo] ? `${campo}-error` : undefined,
   })
@@ -78,35 +53,64 @@ export function FormularioTarea({ alAgregar }: Props) {
       onSubmit={enviar}
       noValidate
       aria-label="Agregar tarea"
-      className="grid gap-4 rounded-lg bg-white p-4 shadow-sm sm:grid-cols-2 lg:grid-cols-6"
+      className="grid grid-cols-2 gap-x-3 gap-y-4 rounded-2xl border border-borde bg-superficie p-5 shadow-tarjeta md:grid-cols-6 lg:grid-cols-2"
     >
-      <div className="sm:col-span-2 lg:col-span-2">
-        <Campo id="titulo" etiqueta="Título" error={errores.titulo}>
-          <input type="text" {...propsCampo('titulo')} />
-        </Campo>
-      </div>
-      <div className="lg:col-span-1">
-        <Campo id="proyecto" etiqueta="Proyecto" error={errores.proyecto}>
-          <input type="text" {...propsCampo('proyecto')} />
-        </Campo>
-      </div>
-      <Campo id="inicio" etiqueta="Fecha de inicio" error={errores.inicio}>
+      <h2 className="col-span-full font-display text-xl font-semibold tracking-tight">
+        Nueva tarea
+      </h2>
+      <Campo
+        id="titulo"
+        etiqueta="Título"
+        error={errores.titulo}
+        className="col-span-2 md:col-span-3 lg:col-span-2"
+      >
+        <input type="text" {...propsCampo('titulo')} />
+      </Campo>
+      <Campo
+        id="proyecto"
+        etiqueta="Proyecto"
+        error={errores.proyecto}
+        className="col-span-2 md:col-span-3 lg:col-span-2"
+      >
+        <input type="text" {...propsCampo('proyecto')} />
+      </Campo>
+      <Campo
+        id="inicio"
+        etiqueta="Fecha de inicio"
+        error={errores.inicio}
+        className="md:col-span-2 lg:col-span-1"
+      >
         <input type="date" {...propsCampo('inicio')} />
       </Campo>
-      <Campo id="fin" etiqueta="Fecha de fin" error={errores.fin}>
+      <Campo
+        id="fin"
+        etiqueta="Fecha de fin"
+        error={errores.fin}
+        className="md:col-span-2 lg:col-span-1"
+      >
         <input type="date" {...propsCampo('fin')} />
       </Campo>
-      <Campo id="horas" etiqueta="Horas" error={errores.horas}>
-        <input type="number" min={0} step={0.5} {...propsCampo('horas')} />
+      <Campo
+        id="horas"
+        etiqueta="Horas"
+        error={errores.horas}
+        className="col-span-2 md:col-span-2 lg:col-span-2"
+      >
+        <input
+          type="number"
+          min={0}
+          step={0.5}
+          {...propsCampo('horas')}
+          className={`${claseCampo} tabular-nums`}
+        />
       </Campo>
-      <div className="sm:col-span-2 lg:col-span-6">
-        <button
-          type="submit"
-          className="w-full rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 sm:w-auto"
-        >
-          Agregar tarea
-        </button>
-      </div>
+      <button
+        type="submit"
+        className="col-span-full inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-acento px-4 text-sm font-semibold text-sobre-acento shadow-tarjeta transition hover:bg-acento-fuerte active:scale-[0.98]"
+      >
+        <Icono nombre="mas" />
+        Agregar tarea
+      </button>
     </form>
   )
 }

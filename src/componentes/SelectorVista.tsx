@@ -1,37 +1,25 @@
 import type { Vista } from '../tipos'
+import { ControlSegmentado, type OpcionSegmentada } from './ControlSegmentado'
 
 interface Props {
   vista: Vista
   alCambiar: (vista: Vista) => void
+  className?: string
 }
 
-const OPCIONES: { valor: Vista; etiqueta: string }[] = [
-  { valor: 'kanban', etiqueta: 'Kanban' },
-  { valor: 'gantt', etiqueta: 'Gantt' },
+const OPCIONES: OpcionSegmentada<Vista>[] = [
+  { valor: 'kanban', etiqueta: 'Kanban', icono: 'tablero' },
+  { valor: 'gantt', etiqueta: 'Gantt', icono: 'gantt' },
 ]
 
-export function SelectorVista({ vista, alCambiar }: Props) {
+export function SelectorVista({ vista, alCambiar, className }: Props) {
   return (
-    <div
-      role="group"
-      aria-label="Vista"
-      className="inline-flex overflow-hidden rounded-md border border-blue-200 bg-white text-sm"
-    >
-      {OPCIONES.map(({ valor, etiqueta }) => (
-        <button
-          key={valor}
-          type="button"
-          aria-pressed={vista === valor}
-          onClick={() => alCambiar(valor)}
-          className={`px-4 py-1.5 font-medium ${
-            vista === valor
-              ? 'bg-blue-700 text-white'
-              : 'text-blue-900 hover:bg-blue-50'
-          }`}
-        >
-          {etiqueta}
-        </button>
-      ))}
-    </div>
+    <ControlSegmentado
+      etiqueta="Vista"
+      opciones={OPCIONES}
+      valor={vista}
+      alCambiar={alCambiar}
+      className={className}
+    />
   )
 }

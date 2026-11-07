@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react'
-import { ETIQUETAS_ESTADO, type Estado, type Tarea } from '../tipos'
+import { ESTILO_ESTADO } from '../estilos'
+import { ETIQUETAS_ESTADO, type Tarea } from '../tipos'
 import { formatearRango, type PosicionBarra } from '../utils/fechas'
 
 interface Props {
@@ -8,12 +9,8 @@ interface Props {
   fila: number
   /** Columna de la cuadrícula en la que empieza el primer día del periodo. */
   desplazamiento: number
-}
-
-const COLOR_ESTADO: Record<Estado, string> = {
-  'por-hacer': 'bg-sky-300 text-blue-950',
-  'en-curso': 'bg-blue-500 text-white',
-  hecho: 'bg-blue-800 text-white',
+  /** Retraso de la animación de entrada, en milisegundos. */
+  retraso?: number
 }
 
 const PUNTA = '0.5rem'
@@ -33,7 +30,13 @@ function recorte({
   return `polygon(${puntos.join(', ')})`
 }
 
-export function BarraTarea({ tarea, posicion, fila, desplazamiento }: Props) {
+export function BarraTarea({
+  tarea,
+  posicion,
+  fila,
+  desplazamiento,
+  retraso = 0,
+}: Props) {
   const descripcion = `${tarea.titulo} (${tarea.proyecto}), ${formatearRango(
     tarea.inicio,
     tarea.fin,
@@ -43,6 +46,7 @@ export function BarraTarea({ tarea, posicion, fila, desplazamiento }: Props) {
     gridRow: fila,
     gridColumn: `${posicion.columnaInicio + desplazamiento} / ${posicion.columnaFin + desplazamiento + 1}`,
     clipPath: recorte(posicion),
+    animationDelay: `${retraso}ms`,
   }
 
   return (
@@ -51,7 +55,7 @@ export function BarraTarea({ tarea, posicion, fila, desplazamiento }: Props) {
       aria-label={descripcion}
       title={descripcion}
       style={estilo}
-      className={`z-[1] m-1 flex items-center truncate rounded px-2 text-xs font-medium ${COLOR_ESTADO[tarea.estado]}`}
+      className={`origen-izquierda z-[1] mx-0.5 flex h-9 animate-crecer items-center self-center rounded-md px-1.5 text-xs font-semibold tabular-nums ring-1 ring-inset ring-tinta/10 transition-[filter] duration-150 hover:brightness-110 ${ESTILO_ESTADO[tarea.estado].barra}`}
     >
       <span className="truncate">{tarea.horas} h</span>
     </div>

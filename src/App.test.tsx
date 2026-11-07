@@ -83,4 +83,25 @@ describe('App', () => {
       ),
     ).toBeInTheDocument()
   })
+
+  it('alterna el tema, lo aplica al documento y lo conserva al recargar', async () => {
+    const user = userEvent.setup()
+    const { unmount } = render(<App />)
+    const interruptor = screen.getByRole('switch', { name: 'Modo oscuro' })
+    expect(interruptor).toHaveAttribute('aria-checked', 'false')
+    expect(document.documentElement.dataset.tema).toBe('claro')
+
+    await user.click(interruptor)
+    expect(interruptor).toHaveAttribute('aria-checked', 'true')
+    expect(document.documentElement.dataset.tema).toBe('oscuro')
+    expect(localStorage.getItem('bitacora-tema')).toBe('oscuro')
+
+    unmount()
+    render(<App />)
+    expect(screen.getByRole('switch', { name: 'Modo oscuro' })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    )
+    expect(document.documentElement.dataset.tema).toBe('oscuro')
+  })
 })

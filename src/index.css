@@ -1,5 +1,225 @@
 @import 'tailwindcss';
 
+/* ---------- Tokens de diseño ----------
+   Paleta "plano técnico": tinta azul marino sobre papel con rejilla.
+   Los componentes usan solo estos nombres semánticos; el tema cambia los valores. */
+@theme inline {
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI Variable Text',
+    'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-display:
+    'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia,
+    serif;
+
+  --color-fondo: var(--fondo);
+  --color-superficie: var(--superficie);
+  --color-superficie-2: var(--superficie-2);
+  --color-borde: var(--borde);
+  --color-borde-fuerte: var(--borde-fuerte);
+  --color-tinta: var(--tinta);
+  --color-suave: var(--suave);
+  --color-tenue: var(--tenue);
+  --color-acento: var(--acento);
+  --color-acento-fuerte: var(--acento-fuerte);
+  --color-acento-suave: var(--acento-suave);
+  --color-sobre-acento: var(--sobre-acento);
+  --color-peligro: var(--peligro);
+
+  --color-hacer: var(--hacer);
+  --color-hacer-suave: var(--hacer-suave);
+  --color-curso: var(--curso);
+  --color-curso-suave: var(--curso-suave);
+  --color-hecho: var(--hecho);
+  --color-hecho-suave: var(--hecho-suave);
+  --color-barra-hacer: var(--barra-hacer);
+  --color-sobre-barra-hacer: var(--sobre-barra-hacer);
+  --color-barra-curso: var(--barra-curso);
+  --color-sobre-barra-curso: var(--sobre-barra-curso);
+  --color-barra-hecho: var(--barra-hecho);
+  --color-sobre-barra-hecho: var(--sobre-barra-hecho);
+
+  --shadow-tarjeta: var(--sombra-tarjeta);
+  --shadow-media: var(--sombra-media);
+  --shadow-elevada: var(--sombra-elevada);
+
+  --animate-aviso: aviso 0.2s ease-out backwards;
+  --animate-crecer: crecer 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+:root {
+  color-scheme: light;
+  --fondo: #f3f5fb;
+  --superficie: #ffffff;
+  --superficie-2: #eef2fa;
+  --borde: #dce3f1;
+  --borde-fuerte: #bfcae2;
+  --tinta: #0d1735;
+  --suave: #44517a;
+  --tenue: #5a6788;
+  --acento: #2447d6;
+  --acento-fuerte: #1b38ad;
+  --acento-suave: #e4e9ff;
+  --sobre-acento: #ffffff;
+  --peligro: #bf2f2d;
+
+  --hacer: #4f5d85;
+  --hacer-suave: #e8ecf6;
+  --curso: #2447d6;
+  --curso-suave: #e3e9ff;
+  --hecho: #086b51;
+  --hecho-suave: #daf3e9;
+  --barra-hacer: #c3cde6;
+  --sobre-barra-hacer: #0d1735;
+  --barra-curso: #2447d6;
+  --sobre-barra-curso: #ffffff;
+  --barra-hecho: #0a7a5c;
+  --sobre-barra-hecho: #ffffff;
+
+  --rejilla: rgba(36, 71, 214, 0.07);
+  --sombra-tarjeta: 0 1px 2px rgba(13, 23, 53, 0.06);
+  --sombra-media:
+    0 1px 2px rgba(13, 23, 53, 0.06), 0 8px 18px -8px rgba(13, 23, 53, 0.18);
+  --sombra-elevada:
+    0 2px 4px rgba(13, 23, 53, 0.1), 0 22px 44px -14px rgba(13, 23, 53, 0.35);
+}
+
+:root[data-tema='oscuro'] {
+  color-scheme: dark;
+  --fondo: #090f23;
+  --superficie: #111a36;
+  --superficie-2: #18234a;
+  --borde: #25325f;
+  --borde-fuerte: #364780;
+  --tinta: #e8ecfa;
+  --suave: #aeb8d9;
+  --tenue: #8e9abf;
+  --acento: #7b97ff;
+  --acento-fuerte: #9bb0ff;
+  --acento-suave: #1d2b66;
+  --sobre-acento: #090f23;
+  --peligro: #ff8280;
+
+  --hacer: #aab5d8;
+  --hacer-suave: #212c55;
+  --curso: #8ba3ff;
+  --curso-suave: #1d2b66;
+  --hecho: #4ad8ae;
+  --hecho-suave: #12393a;
+  --barra-hacer: #3b4878;
+  --sobre-barra-hacer: #e8ecfa;
+  --barra-curso: #3d5fe8;
+  --sobre-barra-curso: #ffffff;
+  --barra-hecho: #0c7a5d;
+  --sobre-barra-hecho: #ffffff;
+
+  --rejilla: rgba(123, 151, 255, 0.07);
+  --sombra-tarjeta: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --sombra-media:
+    0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 18px -8px rgba(0, 0, 0, 0.6);
+  --sombra-elevada:
+    0 2px 4px rgba(0, 0, 0, 0.5), 0 22px 44px -14px rgba(0, 0, 0, 0.8);
+}
+
+/* Sin preferencia guardada, se respeta la del sistema operativo. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema='claro']) {
+    color-scheme: dark;
+    --fondo: #090f23;
+    --superficie: #111a36;
+    --superficie-2: #18234a;
+    --borde: #25325f;
+    --borde-fuerte: #364780;
+    --tinta: #e8ecfa;
+    --suave: #aeb8d9;
+    --tenue: #8e9abf;
+    --acento: #7b97ff;
+    --acento-fuerte: #9bb0ff;
+    --acento-suave: #1d2b66;
+    --sobre-acento: #090f23;
+    --peligro: #ff8280;
+
+    --hacer: #aab5d8;
+    --hacer-suave: #212c55;
+    --curso: #8ba3ff;
+    --curso-suave: #1d2b66;
+    --hecho: #4ad8ae;
+    --hecho-suave: #12393a;
+    --barra-hacer: #3b4878;
+    --sobre-barra-hacer: #e8ecfa;
+    --barra-curso: #3d5fe8;
+    --sobre-barra-curso: #ffffff;
+    --barra-hecho: #0c7a5d;
+    --sobre-barra-hecho: #ffffff;
+
+    --rejilla: rgba(123, 151, 255, 0.07);
+    --sombra-tarjeta: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --sombra-media:
+      0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 18px -8px rgba(0, 0, 0, 0.6);
+    --sombra-elevada:
+      0 2px 4px rgba(0, 0, 0, 0.5), 0 22px 44px -14px rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* ---------- Base ---------- */
 body {
-  @apply bg-blue-50 text-blue-950 antialiased;
+  min-height: 100dvh;
+  background-color: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Rejilla de plano, más visible arriba y que se desvanece hacia abajo. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--rejilla) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rejilla) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 0%,
+    #000 25%,
+    transparent 80%
+  );
+}
+
+:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+@keyframes aviso {
+  from {
+    opacity: 0;
+    translate: 0 -3px;
+  }
+}
+
+@keyframes crecer {
+  from {
+    opacity: 0;
+    scale: 0.4 1;
+  }
+}
+
+.origen-izquierda {
+  transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

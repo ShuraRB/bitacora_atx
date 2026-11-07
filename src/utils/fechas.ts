@@ -179,3 +179,9 @@ export function etiquetaDia(fecha: string): string {
   const f = parsearFecha(fecha)
   return f ? format(f, 'EEE d', { locale: es }) : fecha
 }
+
+/** Sábado o domingo. */
+export function esFinDeSemana(fecha: string): boolean {
+  const f = parsearFecha(fecha)
+  return f !== null && (f.getDay() === 0 || f.getDay() === 6)
+}

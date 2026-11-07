@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { cargarTareas, guardarTareas } from './almacenamiento'
+import {
+  cargarTareas,
+  cargarTema,
+  guardarTareas,
+  guardarTema,
+} from './almacenamiento'
 import type { Tarea } from './tipos'
 
 const tarea: Tarea = {
@@ -31,5 +36,22 @@ describe('almacenamiento', () => {
       JSON.stringify([tarea, { ...tarea, estado: 'otro' }, 5]),
     )
     expect(cargarTareas()).toEqual([tarea])
+  })
+})
+
+describe('almacenamiento del tema', () => {
+  it('devuelve null si nunca se eligió un tema', () => {
+    expect(cargarTema()).toBeNull()
+  })
+
+  it('guarda y recupera el tema con la clave bitacora-tema', () => {
+    guardarTema('oscuro')
+    expect(localStorage.getItem('bitacora-tema')).toBe('oscuro')
+    expect(cargarTema()).toBe('oscuro')
+  })
+
+  it('ignora valores desconocidos', () => {
+    localStorage.setItem('bitacora-tema', 'morado')
+    expect(cargarTema()).toBeNull()
   })
 })

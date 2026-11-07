@@ -24,3 +24,5 @@ export interface Tarea {
 export type Vista = 'kanban' | 'gantt'
 
 export type Periodo = 'semana' | 'mes'
+
+export type Tema = 'claro' | 'oscuro'

@@ -4,6 +4,7 @@ import {
   diasDelPeriodo,
   esFechaValida,
   etiquetaDia,
+  esFinDeSemana,
   etiquetaPeriodo,
   posicionBarra,
   rangoPeriodo,
@@ -345,5 +346,18 @@ describe('etiquetaPeriodo / etiquetaDia', () => {
 
   it('etiqueta un día', () => {
     expect(etiquetaDia('2026-11-02')).toBe('lun 2')
+  })
+})
+
+describe('esFinDeSemana', () => {
+  it('reconoce sábado y domingo', () => {
+    expect(esFinDeSemana('2026-11-07')).toBe(true)
+    expect(esFinDeSemana('2026-11-08')).toBe(true)
+  })
+
+  it('no marca los días entre semana ni las fechas inválidas', () => {
+    expect(esFinDeSemana('2026-11-02')).toBe(false)
+    expect(esFinDeSemana('2026-11-06')).toBe(false)
+    expect(esFinDeSemana('basura')).toBe(false)
   })
 })

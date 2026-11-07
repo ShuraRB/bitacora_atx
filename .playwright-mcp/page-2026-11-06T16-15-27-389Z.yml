@@ -1,0 +1,46 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - heading "Bitácora de tareas" [level=1] [ref=e13]
+      - group "Vista" [ref=e14]:
+        - button "Kanban" [pressed] [ref=e16]
+        - button "Gantt" [ref=e21]
+      - switch "Modo oscuro" [ref=e24]
+  - main [ref=e29]:
+    - complementary [ref=e30]:
+      - form "Agregar tarea" [ref=e31]:
+        - heading "Nueva tarea" [level=2] [ref=e32]
+        - generic [ref=e33]:
+          - generic [ref=e34]: Título
+          - textbox "Título" [ref=e35]
+        - generic [ref=e36]:
+          - generic [ref=e37]: Proyecto
+          - textbox "Proyecto" [ref=e38]
+        - generic [ref=e39]:
+          - generic [ref=e40]: Fecha de inicio
+          - textbox "Fecha de inicio" [ref=e41]: 2026-11-06
+        - generic [ref=e42]:
+          - generic [ref=e43]: Fecha de fin
+          - textbox "Fecha de fin" [ref=e44]: 2026-11-06
+        - generic [ref=e45]:
+          - generic [ref=e46]: Horas
+          - spinbutton "Horas" [ref=e47]: "1"
+        - button "Agregar tarea" [ref=e48]
+    - generic [ref=e51]:
+      - generic [ref=e52]:
+        - region "Por hacer" [ref=e53]:
+          - heading "Por hacer 0" [level=2] [ref=e54]:
+            - text: Por hacer
+            - generic [ref=e56]: "0"
+          - paragraph [ref=e61]: Sin tareas.
+        - region "En curso" [ref=e62]:
+          - heading "En curso 0" [level=2] [ref=e63]:
+            - text: En curso
+            - generic [ref=e65]: "0"
+          - paragraph [ref=e70]: Sin tareas.
+        - region "Hecho" [ref=e71]:
+          - heading "Hecho 0" [level=2] [ref=e72]:
+            - text: Hecho
+            - generic [ref=e74]: "0"
+          - paragraph [ref=e79]: Sin tareas.
+      - status [ref=e80]
